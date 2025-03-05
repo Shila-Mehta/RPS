@@ -7,22 +7,24 @@ function getComputerChoice(){
     let computerChoice=Math.floor(Math.random()*3)+1;
     console.log(computerChoice);
 
-    return (computerChoice===1)? 'Rock':(computerChoice===2)? 'paper':(computerChoice===3)?'Scissor':undefined;
+    return (computerChoice===1)? 'rock':(computerChoice===2)? 'paper':(computerChoice===3)?'Scissor':undefined;
    
     
 }
 
 
-function getHumanChoice(){
+// function getHumanChoice(){
 
-   let  humanChoice=prompt('Enter your choice from Rock  ,Paper ,Scissor');
-   return (humanChoice=='Rock' || humanChoice==='paper' ||  humanChoice==='Scissor')? humanChoice :'Invalide Input';
+//    let  humanChoice=prompt('Enter your choice from Rock  ,Paper ,Scissor');
+//    return (humanChoice=='Rock' || humanChoice==='paper' ||  humanChoice==='Scissor')? humanChoice :'Invalide Input';
 
-}
+// }
 
 
 
 function playRound(humanChoice,computerChoice){
+
+    winnerPlayer();
 
     if(humanChoice==='rock' &&  computerChoice==='paper'){
         console.log('Paper wraps Rock ');
@@ -54,26 +56,80 @@ function playRound(humanChoice,computerChoice){
         console.log('You lost');
         computerScore++;
     }
-    
-
-}
-
-
-function playGame(){
-
-    for(let i=0;i<5;i++){
-
-        const computerChoice=getComputerChoice().toLowerCase();
-        const humanChoice=getHumanChoice().toLowerCase();
-
-       playRound(humanChoice,computerChoice);
+    else{
+        console.log('same');
     }
 
-    return humanScore > computerScore? 'humanPlayer won':'computerPlayer won';
+
+    const human=document.querySelector('.Human');
+
+    const computer=document.querySelector('.Computer');
+
+    human.textContent=humanScore;
+    computer.textContent=computerScore;
+
     
 
+}
+
+
+
+    const computerChoice=getComputerChoice().toLowerCase();
+ 
+    const buttons=document.querySelectorAll('button');
+
+    console.log(buttons);
+
+    buttons.forEach(button => {
+
+        button.addEventListener('click',(e)=>{
+
+            console.log(e.target.id);
+
+            switch(e.target.id){
+
+                case '1':
+                playRound('rock',computerChoice);
+                break;
+
+                case '2':
+                 playRound('paper',computerChoice);
+                 break;
+
+                case '3':
+                 playRound('Scissor',computerChoice);
+                 break;
+
+                default:
+                    alert('Invalid choice');
+
+
+
+            }
+
+           
+    })
+        
+    });
+
+
+    function winnerPlayer(){
+        const div=document.querySelector('.score');
+
+        const result= (humanScore===5)?'Player1 won':(computerScore===5)?'Player2 won':undefined;
+
+        if(result){
+            div.textContent=result;
+            humanScore=0;
+            computerScore=0;
+        }
+
+       
+        
+    }
+
+    
 
   
-}
-    console.log(playGame());
+ 
 
